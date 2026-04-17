@@ -31,13 +31,13 @@ body{background:#030f07;font-family:var(--fb);min-height:100vh;overflow-x:hidden
 .slabel{font-family:var(--fd);font-size:11px;font-weight:600;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
 .stitle{font-family:var(--fd);font-size:18px;font-weight:600;color:#fff;margin-top:-6px;}
 
-.phone{width:272px;background:#0a3a1a;border-radius:36px;overflow:hidden;border:5px solid #151515;box-shadow:0 24px 60px rgba(0,0,0,0.7);position:relative;font-family:var(--fb);}
+.phone{width:272px;height:580px;background:#0a3a1a;border-radius:36px;overflow:hidden;border:5px solid #151515;box-shadow:0 24px 60px rgba(0,0,0,0.7);position:relative;font-family:var(--fb);display:flex;flex-direction:column;}
 .sbar{background:#052e14;padding:8px 16px 4px;display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.5);}
 .tbadge{text-align:center;padding:8px 16px 4px;}
 .tbadge span{display:inline-block;background:#fff;border-radius:999px;padding:3px 16px;font-size:11px;font-weight:600;color:var(--gm);letter-spacing:2px;font-family:var(--fd);}
 
 /* ── SCREEN 1 — closed box ── */
-.s1-bg{position:relative;overflow:hidden;min-height:460px;}
+.s1-bg{position:relative;overflow:hidden;flex:1;min-height:0;}
 .s1-bg svg.bg{position:absolute;top:0;left:0;}
 .s1-content{position:relative;z-index:2;padding-bottom:16px;}
 .s1-header{text-align:center;padding:14px 16px 4px;}
@@ -80,7 +80,7 @@ body{background:#030f07;font-family:var(--fb);min-height:100vh;overflow-x:hidden
 .s1-footer-row span{font-size:9px;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:3px;}
 
 /* ── SCREEN 2 — opening ── */
-.s2-scene{position:relative;min-height:460px;overflow:hidden;}
+.s2-scene{position:relative;overflow:hidden;flex:1;min-height:0;}
 .s2-scene svg.bg2{position:absolute;top:0;left:0;}
 .s2-content{position:relative;z-index:2;padding-bottom:16px;}
 .s2-header{text-align:center;padding:14px 16px 6px;}
@@ -117,7 +117,7 @@ body{background:#030f07;font-family:var(--fb);min-height:100vh;overflow-x:hidden
 .s2-cta{margin:4px 14px 10px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:999px;padding:13px 0;text-align:center;font-family:var(--fd);font-size:14px;font-weight:700;color:#fff;letter-spacing:1px;cursor:pointer;border:1px solid #4ade80;}
 
 /* ── SCREEN 3 — revealed ── */
-.s3-scene{position:relative;overflow:hidden;min-height:460px;}
+.s3-scene{position:relative;overflow:hidden;flex:1;min-height:0;}
 .s3-cv{position:absolute;top:0;left:0;pointer-events:none;z-index:10;}
 .s3-inner{position:relative;z-index:2;padding-bottom:16px;}
 
