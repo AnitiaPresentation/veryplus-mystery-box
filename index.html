@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mystery Box Very — VeryPlus</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gd:#062010;--gm:#0f5c2a;--gb:#1a7a3c;--gl:#22c55e;
+  --gold:#f59e0b;--goldl:#fbbf24;--goldp:#fef08a;
+  --fd:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;
+}
+body{background:#030f07;font-family:var(--fb);min-height:100vh;overflow-x:hidden;}
+.bg-stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+.bg-star{position:absolute;border-radius:50%;background:rgba(251,191,36,0.5);animation:sf 3s ease-in-out infinite;}
+@keyframes sf{0%,100%{opacity:0;}50%{opacity:1;}}
+
+.header{text-align:center;padding:48px 24px 32px;position:relative;z-index:1;}
+.hbadge{display:inline-block;background:#fff;color:var(--gm);font-family:var(--fd);font-size:13px;font-weight:600;letter-spacing:3px;padding:6px 24px;border-radius:999px;margin-bottom:16px;}
+.header h1{font-family:var(--fd);font-size:clamp(32px,5vw,58px);font-weight:700;color:#fff;letter-spacing:2px;line-height:1;}
+.header h1 span{color:var(--goldl);}
+.header p{color:rgba(255,255,255,0.5);font-size:15px;margin-top:10px;}
+.hline{width:60px;height:2px;background:var(--gold);margin:20px auto 0;opacity:0.6;}
+
+.screens{display:flex;justify-content:center;align-items:flex-start;gap:28px;padding:24px 24px 64px;flex-wrap:wrap;position:relative;z-index:1;}
+.sb{display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;transform:translateY(28px);animation:fu .6s ease forwards;}
+.sb:nth-child(1){animation-delay:.1s;}.sb:nth-child(2){animation-delay:.3s;}.sb:nth-child(3){animation-delay:.5s;}
+@keyframes fu{to{opacity:1;transform:translateY(0);}}
+.slabel{font-family:var(--fd);font-size:11px;font-weight:600;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+.stitle{font-family:var(--fd);font-size:18px;font-weight:600;color:#fff;margin-top:-6px;}
+
+.phone{width:272px;background:#0a3a1a;border-radius:36px;overflow:hidden;border:5px solid #151515;box-shadow:0 24px 60px rgba(0,0,0,0.7);position:relative;font-family:var(--fb);}
+.sbar{background:#052e14;padding:8px 16px 4px;display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.5);}
+.tbadge{text-align:center;padding:8px 16px 4px;}
+.tbadge span{display:inline-block;background:#fff;border-radius:999px;padding:3px 16px;font-size:11px;font-weight:600;color:var(--gm);letter-spacing:2px;font-family:var(--fd);}
+
+/* ── SCREEN 1 — closed box ── */
+.s1-bg{position:relative;overflow:hidden;min-height:460px;}
+.s1-bg svg.bg{position:absolute;top:0;left:0;}
+.s1-content{position:relative;z-index:2;padding-bottom:16px;}
+.s1-header{text-align:center;padding:14px 16px 4px;}
+.s1-header .pre{font-size:13px;color:rgba(255,255,255,0.8);}
+.s1-header .main{font-family:var(--fd);font-size:30px;font-weight:700;color:#fff;line-height:1;letter-spacing:1px;}
+.s1-header .sub{font-size:11px;color:var(--goldl);margin-top:4px;font-weight:500;}
+.s1-only{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:999px;padding:3px 14px;font-size:10px;color:#fff;margin-top:6px;}
+
+.streak-badge{position:absolute;top:12px;right:14px;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:12px;padding:5px 10px;z-index:5;}
+.streak-badge .sn{font-family:var(--fd);font-size:16px;font-weight:700;color:#fff;line-height:1;}
+.streak-badge .sl{font-size:9px;color:rgba(255,255,255,0.85);}
+
+.box-wrap{display:flex;justify-content:center;padding:10px 0 6px;position:relative;}
+.box-scene{position:relative;width:180px;height:190px;}
+
+/* Box CSS art */
+.box-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:120px;height:95px;background:linear-gradient(160deg,#1a8a3c,#0d5c24);border-radius:6px 6px 10px 10px;border:2px solid rgba(251,191,36,0.4);}
+.box-body::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:16px;height:100%;background:rgba(251,191,36,0.25);border-left:1px solid rgba(251,191,36,0.3);border-right:1px solid rgba(251,191,36,0.3);}
+.box-lid{position:absolute;bottom:90px;left:50%;transform:translateX(-50%);width:130px;height:36px;background:linear-gradient(160deg,#22a348,#126e2c);border-radius:6px;border:2px solid rgba(251,191,36,0.4);transition:transform .6s ease,opacity .6s ease;transform-origin:center bottom;}
+.box-lid::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:16px;height:100%;background:rgba(251,191,36,0.25);border-left:1px solid rgba(251,191,36,0.3);border-right:1px solid rgba(251,191,36,0.3);}
+.box-ribbon-v{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:16px;height:131px;background:linear-gradient(180deg,rgba(251,191,36,0.7),rgba(245,158,11,0.5));z-index:2;pointer-events:none;}
+.box-bow{position:absolute;bottom:122px;left:50%;transform:translateX(-50%);z-index:3;width:50px;height:28px;}
+.bow-l{position:absolute;right:26px;top:0;width:22px;height:22px;border-radius:50% 0 50% 50%;background:var(--goldl);transform:rotate(-30deg);opacity:.85;}
+.bow-r{position:absolute;left:26px;top:0;width:22px;height:22px;border-radius:0 50% 50% 50%;background:var(--gold);transform:rotate(30deg);opacity:.85;}
+.bow-c{position:absolute;left:50%;top:6px;transform:translateX(-50%);width:12px;height:12px;background:var(--goldp);border-radius:50%;}
+
+.box-qmark{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:38px;font-weight:700;color:rgba(255,255,255,0.9);z-index:4;animation:qPulse 1.5s ease-in-out infinite;text-shadow:0 0 20px rgba(255,255,255,0.5);}
+@keyframes qPulse{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.08);}}
+
+.box-glow{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:130px;height:60px;background:radial-gradient(ellipse,rgba(251,191,36,0.3) 0%,transparent 70%);border-radius:50%;animation:gP 2s ease-in-out infinite;pointer-events:none;}
+@keyframes gP{0%,100%{opacity:.6;}50%{opacity:1;}}
+
+/* sparkles around box */
+.sp{position:absolute;font-size:14px;animation:spTw 1.8s ease-in-out infinite;}
+@keyframes spTw{0%,100%{opacity:0;transform:scale(.5);}50%{opacity:1;transform:scale(1);}}
+
+.s1-cta{margin:6px 14px 10px;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:999px;padding:14px 0;text-align:center;font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;letter-spacing:1px;cursor:pointer;border:none;width:calc(100% - 28px);animation:ctaP 2s ease-in-out infinite;}
+@keyframes ctaP{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,0);}50%{box-shadow:0 0 0 8px rgba(245,158,11,0.2);}}
+.s1-footer-row{display:flex;justify-content:center;gap:14px;padding:4px 12px 14px;}
+.s1-footer-row span{font-size:9px;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:3px;}
+
+/* ── SCREEN 2 — opening ── */
+.s2-scene{position:relative;min-height:460px;overflow:hidden;}
+.s2-scene svg.bg2{position:absolute;top:0;left:0;}
+.s2-content{position:relative;z-index:2;padding-bottom:16px;}
+.s2-header{text-align:center;padding:14px 16px 6px;}
+.s2-header .main{font-family:var(--fd);font-size:26px;font-weight:700;color:#fff;letter-spacing:1px;}
+.s2-header .sub{font-size:11px;color:rgba(255,255,255,0.6);margin-top:3px;}
+
+.open-scene{display:flex;justify-content:center;padding:6px 0;position:relative;height:220px;}
+.open-box-body{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:120px;height:95px;background:linear-gradient(160deg,#1a8a3c,#0d5c24);border-radius:6px 6px 10px 10px;border:2px solid rgba(251,191,36,0.4);overflow:hidden;}
+.open-box-body::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:16px;height:100%;background:rgba(251,191,36,0.25);}
+.open-lid{position:absolute;bottom:108px;left:50%;transform:translateX(-50%) rotate(-45deg);width:130px;height:36px;background:linear-gradient(160deg,#22a348,#126e2c);border-radius:6px;border:2px solid rgba(251,191,36,0.4);transform-origin:left bottom;animation:lidFly 3s ease-in-out infinite;}
+@keyframes lidFly{0%,100%{transform:translateX(-50%) translateY(0) rotate(-45deg);}50%{transform:translateX(-70%) translateY(-30px) rotate(-65deg);}}
+
+/* burst from box */
+.burst{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);}
+.burst-ray{position:absolute;bottom:0;left:50%;width:3px;border-radius:2px;transform-origin:bottom center;animation:rayGrow 1.5s ease-in-out infinite;}
+@keyframes rayGrow{0%,100%{height:20px;opacity:.3;}50%{height:70px;opacity:.9;}}
+
+.open-light{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);width:100px;height:100px;background:radial-gradient(ellipse,rgba(254,240,138,0.7) 0%,rgba(251,191,36,0.3) 40%,transparent 70%);border-radius:50%;animation:lightPulse 1s ease-in-out infinite;}
+@keyframes lightPulse{0%,100%{opacity:.7;transform:translateX(-50%) scale(1);}50%{opacity:1;transform:translateX(-50%) scale(1.3);}}
+
+/* flying prizes */
+.flying-prize{position:absolute;animation:flyOut 2s ease-in-out infinite;font-size:22px;}
+@keyframes flyOut{0%{transform:translate(0,0) scale(.5);opacity:0;}40%{opacity:1;}100%{opacity:.8;}}
+
+.s2-suspense{text-align:center;font-family:var(--fd);font-size:14px;color:rgba(255,255,255,0.7);letter-spacing:2px;padding:4px 0;animation:blink 1s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:.5;}50%{opacity:1;}}
+
+.s2-dots{text-align:center;display:flex;justify-content:center;gap:8px;padding:6px 0 10px;}
+.dot{width:10px;height:10px;background:var(--goldl);border-radius:50%;animation:dotPulse 1.2s ease-in-out infinite;}
+.dot:nth-child(2){animation-delay:.2s;}.dot:nth-child(3){animation-delay:.4s;}
+@keyframes dotPulse{0%,100%{transform:scale(.6);opacity:.4;}50%{transform:scale(1);opacity:1;}}
+
+.s2-hint{text-align:center;font-size:11px;color:rgba(255,255,255,0.5);padding:0 16px 6px;}
+.s2-cta{margin:4px 14px 10px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:999px;padding:13px 0;text-align:center;font-family:var(--fd);font-size:14px;font-weight:700;color:#fff;letter-spacing:1px;cursor:pointer;border:1px solid #4ade80;}
+
+/* ── SCREEN 3 — revealed ── */
+.s3-scene{position:relative;overflow:hidden;min-height:460px;}
+.s3-cv{position:absolute;top:0;left:0;pointer-events:none;z-index:10;}
+.s3-inner{position:relative;z-index:2;padding-bottom:16px;}
+
+.s3-top{text-align:center;padding:12px 0 2px;font-size:30px;animation:bIn .6s cubic-bezier(.36,.07,.19,.97) .5s both;}
+@keyframes bIn{0%{transform:scale(0);opacity:0;}60%{transform:scale(1.2);}100%{transform:scale(1);}}
+.s3-title{text-align:center;font-family:var(--fd);font-size:36px;font-weight:700;color:#fff;letter-spacing:3px;animation:glowT 2s ease-in-out infinite;}
+@keyframes glowT{0%,100%{text-shadow:0 0 20px rgba(251,191,36,.4);}50%{text-shadow:0 0 40px rgba(251,191,36,.9),0 0 60px rgba(251,191,36,.3);}}
+.s3-sub{text-align:center;font-size:10px;color:rgba(255,255,255,.55);letter-spacing:1px;padding:2px 0 8px;}
+.s3-div{height:1px;background:linear-gradient(90deg,transparent,rgba(251,191,36,.5),transparent);margin:0 20px 10px;}
+
+/* open box reveal */
+.s3-box-wrap{display:flex;justify-content:center;padding:4px 0 4px;position:relative;}
+.s3-open-box{position:relative;width:160px;height:160px;}
+.sob-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:110px;height:80px;background:linear-gradient(160deg,#1a8a3c,#0d5c24);border-radius:6px 6px 10px 10px;border:2px solid rgba(251,191,36,.5);}
+.sob-body::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:14px;height:100%;background:rgba(251,191,36,.2);}
+.sob-lid{position:absolute;bottom:74px;left:10%;width:110px;height:32px;background:linear-gradient(160deg,#22a348,#126e2c);border-radius:6px;border:2px solid rgba(251,191,36,.5);transform:rotate(-35deg);}
+.sob-glow{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);width:90px;height:90px;background:radial-gradient(ellipse,rgba(254,240,138,.5) 0%,transparent 70%);border-radius:50%;animation:gP 1.5s ease-in-out infinite;}
+.sob-prize{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);font-size:36px;animation:prizeFloat 2s ease-in-out infinite;}
+@keyframes prizeFloat{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-8px);}}
+
+.s3-streak{display:flex;justify-content:center;margin:4px 0 6px;}
+.s3-streak span{background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:999px;padding:4px 16px;font-family:var(--fd);font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px;}
+
+.s3-prize-info{margin:0 14px 6px;background:rgba(255,255,255,.07);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:10px 14px;text-align:center;}
+.s3-prize-info .lab{font-size:10px;color:rgba(255,255,255,.55);}
+.s3-prize-info .val{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--goldl);margin-top:2px;}
+.s3-prize-info .desc{font-size:10px;color:rgba(255,255,255,.5);margin-top:1px;}
+
+.s3-sub2{text-align:center;font-size:12px;color:rgba(255,255,255,.85);padding:6px 16px 8px;}
+.s3-cta{margin:0 14px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:999px;padding:13px 0;text-align:center;font-family:var(--fd);font-size:14px;font-weight:700;color:#fff;letter-spacing:1px;border:1px solid #4ade80;cursor:pointer;animation:ctaP2 2s ease-in-out infinite;}
+@keyframes ctaP2{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}50%{box-shadow:0 0 0 6px rgba(34,197,94,.15);}}
+.s3-note{text-align:center;font-size:9px;color:rgba(255,255,255,.3);padding:8px 0 4px;}
+
+.footer{text-align:center;padding:0 24px 48px;color:rgba(255,255,255,.25);font-size:11px;letter-spacing:.5px;position:relative;z-index:1;}
+.footer a{color:rgba(255,255,255,.4);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div class="bg-stars" id="bgStars"></div>
+
+<div class="header">
+  <div class="hbadge">VERYPLUS</div>
+  <h1>MYSTERY BOX <span>VERY</span></h1>
+  <p>Una sorpresa ogni settimana · Premio sempre garantito</p>
+  <div class="hline"></div>
+</div>
+
+<div class="screens">
+
+  <!-- ── SCREEN 1 — Box chiusa ── -->
+  <div class="sb">
+    <div class="slabel">01 / Attesa</div>
+    <div class="stitle">La box ti aspetta</div>
+    <div class="phone">
+      <div class="sbar"><span>9:41</span><span>●●● 5G ■</span></div>
+      <div class="tbadge"><span>VERYPLUS</span></div>
+      <div class="s1-bg">
+        <!-- BG SVG -->
+        <svg class="bg" viewBox="0 0 262 460" width="262" height="460">
+          <defs>
+            <radialGradient id="bg1" cx="50%" cy="45%" r="65%">
+              <stop offset="0%" stop-color="#1a7a3c"/><stop offset="55%" stop-color="#0a4020"/><stop offset="100%" stop-color="#040f07"/>
+            </radialGradient>
+            <radialGradient id="burst1" cx="50%" cy="52%" r="35%">
+              <stop offset="0%" stop-color="#fef08a" stop-opacity="0.25"/><stop offset="100%" stop-color="#0a4020" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="262" height="460" fill="url(#bg1)"/>
+          <rect width="262" height="460" fill="url(#burst1)"/>
+          <!-- subtle rays -->
+          <g opacity="0.12">
+            <line x1="131" y1="240" x2="131" y2="20" stroke="#fef08a" stroke-width="20" stroke-linecap="round"/>
+            <line x1="131" y1="240" x2="262" y2="150" stroke="#fef08a" stroke-width="12" stroke-linecap="round"/>
+            <line x1="131" y1="240" x2="0" y2="150" stroke="#fef08a" stroke-width="12" stroke-linecap="round"/>
+            <line x1="131" y1="240" x2="262" y2="320" stroke="#fef08a" stroke-width="10" stroke-linecap="round"/>
+            <line x1="131" y1="240" x2="0" y2="320" stroke="#fef08a" stroke-width="10" stroke-linecap="round"/>
+            <line x1="131" y1="240" x2="131" y2="460" stroke="#fef08a" stroke-width="14" stroke-linecap="round"/>
+          </g>
+          <!-- bg stars -->
+          <g fill="#fef08a" opacity="0.6">
+            <circle cx="20" cy="60" r="1.5"/><circle cx="245" cy="50" r="1.5"/>
+            <circle cx="15" cy="160" r="1"/><circle cx="250" cy="170" r="1"/>
+            <circle cx="22" cy="380" r="1.5"/><circle cx="242" cy="390" r="1"/>
+          </g>
+        </svg>
+        <!-- streak badge -->
+        <div class="streak-badge" style="position:absolute;top:12px;right:12px;z-index:5;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:12px;padding:5px 10px;">
+          <div style="font-family:var(--fd);font-size:16px;font-weight:700;color:#fff;line-height:1;">Sett. 3 🔥</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.8);">Box Premium</div>
+        </div>
+        <div class="s1-content">
+          <div class="s1-header">
+            <div class="pre">Apri la tua</div>
+            <div class="main">MYSTERY BOX</div>
+            <div class="sub">Un premio sicuro, ogni settimana!</div>
+            <div class="s1-only">Solo per abbonati VeryPlus</div>
+          </div>
+          <!-- Closed box -->
+          <div class="box-wrap">
+            <div class="box-scene">
+              <div class="box-glow"></div>
+              <div class="box-body"></div>
+              <div class="box-ribbon-v"></div>
+              <div class="box-lid"></div>
+              <div class="box-bow">
+                <div class="bow-l"></div>
+                <div class="bow-r"></div>
+                <div class="bow-c"></div>
+              </div>
+              <div class="box-qmark">?</div>
+              <!-- sparkles -->
+              <div class="sp" style="top:10px;left:20px;animation-delay:.2s;">✦</div>
+              <div class="sp" style="top:10px;right:18px;animation-delay:.7s;">✦</div>
+              <div class="sp" style="top:50px;left:5px;animation-delay:1.1s;font-size:10px;">⭐</div>
+              <div class="sp" style="top:50px;right:5px;animation-delay:.4s;font-size:10px;">⭐</div>
+              <div class="sp" style="bottom:30px;left:8px;animation-delay:.9s;font-size:10px;">✦</div>
+              <div class="sp" style="bottom:30px;right:8px;animation-delay:.3s;font-size:10px;">✦</div>
+            </div>
+          </div>
+          <button class="s1-cta" onclick="alert('Apri la schermata 2 per vedere l\'animazione!')">🎁 SCOPRI COSA HAI VINTO!</button>
+          <div class="s1-footer-row">
+            <span>✅ Sempre un premio garantito</span>
+            <span>🎁 Sorprese esclusive</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 2 — Apertura ── -->
+  <div class="sb">
+    <div class="slabel">02 / Apertura</div>
+    <div class="stitle">La box si apre...</div>
+    <div class="phone">
+      <div class="sbar"><span>9:41</span><span>●●● 5G ■</span></div>
+      <div class="tbadge"><span>VERYPLUS</span></div>
+      <div class="s2-scene">
+        <svg class="bg2" viewBox="0 0 262 460" width="262" height="460">
+          <defs>
+            <radialGradient id="bg2" cx="50%" cy="48%" r="65%">
+              <stop offset="0%" stop-color="#2a9a4c"/><stop offset="50%" stop-color="#0a4820"/><stop offset="100%" stop-color="#020c04"/>
+            </radialGradient>
+            <radialGradient id="burst2" cx="50%" cy="52%" r="40%">
+              <stop offset="0%" stop-color="#fef08a" stop-opacity="0.6"/><stop offset="45%" stop-color="#f59e0b" stop-opacity="0.2"/><stop offset="100%" stop-color="#0a4020" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="262" height="460" fill="url(#bg2)"/>
+          <rect width="262" height="460" fill="url(#burst2)"/>
+          <!-- strong rays -->
+          <g opacity="0.35">
+            <line x1="131" y1="250" x2="131" y2="10" stroke="#fef08a" stroke-width="24" stroke-linecap="round"/>
+            <line x1="131" y1="250" x2="262" y2="140" stroke="#fef08a" stroke-width="16" stroke-linecap="round"/>
+            <line x1="131" y1="250" x2="0" y2="140" stroke="#fef08a" stroke-width="16" stroke-linecap="round"/>
+            <line x1="131" y1="250" x2="262" y2="360" stroke="#fef08a" stroke-width="14" stroke-linecap="round"/>
+            <line x1="131" y1="250" x2="0" y2="360" stroke="#fef08a" stroke-width="14" stroke-linecap="round"/>
+            <line x1="131" y1="250" x2="262" y2="250" stroke="#fef08a" stroke-width="12" stroke-linecap="round"/>
+            <line x1="131" y1="250" x2="0" y2="250" stroke="#fef08a" stroke-width="12" stroke-linecap="round"/>
+            <line x1="131" y1="250" x2="131" y2="460" stroke="#fef08a" stroke-width="18" stroke-linecap="round"/>
+          </g>
+          <!-- firework bursts -->
+          <g opacity="0.85">
+            <g transform="translate(38,72)">
+              <line x1="0" y1="0" x2="0" y2="-22" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="19" y2="-12" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="22" y2="5" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="10" y2="20" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-14" y2="18" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-22" y2="0" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-18" y2="-15" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="0" cy="-24" r="3" fill="#fef08a"/><circle cx="20" cy="-13" r="2.5" fill="#fbbf24"/>
+              <circle cx="23" cy="6" r="2.5" fill="#fef08a"/><circle cx="11" cy="22" r="2.5" fill="#fbbf24"/>
+            </g>
+            <g transform="translate(228,58)">
+              <line x1="0" y1="0" x2="0" y2="-20" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="17" y2="-10" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="19" y2="5" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="8" y2="18" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-12" y2="15" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-19" y2="0" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-16" y2="-13" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="0" cy="-22" r="3" fill="#fbbf24"/><circle cx="18" cy="-11" r="2.5" fill="#fef08a"/>
+            </g>
+            <g transform="translate(20,270)" opacity="0.6">
+              <line x1="0" y1="0" x2="0" y2="-16" stroke="#fef08a" stroke-width="1.4" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="14" y2="-8" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="16" y2="4" stroke="#fef08a" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="0" cy="-18" r="2" fill="#fef08a"/>
+            </g>
+            <g transform="translate(244,278)" opacity="0.6">
+              <line x1="0" y1="0" x2="0" y2="-16" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="14" y2="-8" stroke="#fef08a" stroke-width="1.4" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="16" y2="4" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="0" cy="-18" r="2" fill="#fbbf24"/>
+            </g>
+          </g>
+        </svg>
+        <div class="s2-content">
+          <div class="s2-header">
+            <div class="main">STA ARRIVANDO...</div>
+            <div class="sub">Il tuo premio si sta rivelando</div>
+          </div>
+          <div class="open-scene">
+            <div class="open-light"></div>
+            <div class="open-box-body"></div>
+            <div class="open-lid"></div>
+            <!-- burst rays -->
+            <div class="burst" id="burstRays"></div>
+            <!-- flying prizes -->
+            <div class="flying-prize" style="bottom:170px;left:30px;animation-delay:0s;animation-duration:1.8s;">📱</div>
+            <div class="flying-prize" style="bottom:190px;right:28px;animation-delay:.3s;animation-duration:2.1s;">🎁</div>
+            <div class="flying-prize" style="bottom:155px;left:18px;animation-delay:.6s;animation-duration:1.6s;font-size:16px;">⭐</div>
+            <div class="flying-prize" style="bottom:165px;right:16px;animation-delay:.9s;animation-duration:2s;font-size:16px;">✨</div>
+            <div class="flying-prize" style="bottom:210px;left:50%;margin-left:-40px;animation-delay:.4s;animation-duration:1.9s;font-size:18px;">💫</div>
+          </div>
+          <div class="s2-suspense">APERTURA IN CORSO</div>
+          <div class="s2-dots">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          </div>
+          <div class="s2-hint">L'attesa fa parte del gioco...</div>
+          <div class="s2-cta">⚡ ACCELERA L'APERTURA</div>
+          <div style="text-align:center;font-size:9px;color:rgba(255,255,255,.35);padding:4px 0 14px;">Invita un amico per aperture extra</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN 3 — Premio rivelato ── -->
+  <div class="sb">
+    <div class="slabel">03 / Reveal</div>
+    <div class="stitle">Premio rivelato!</div>
+    <div class="phone">
+      <div class="sbar"><span>9:41</span><span>●●● 5G ■</span></div>
+      <div class="tbadge"><span>VERYPLUS</span></div>
+      <div class="s3-scene">
+        <canvas class="s3-cv" id="confettiCanvas" width="262" height="460"></canvas>
+        <svg style="position:absolute;top:0;left:0;pointer-events:none;" viewBox="0 0 262 460" width="262" height="460">
+          <defs>
+            <radialGradient id="s3bg" cx="50%" cy="38%" r="65%">
+              <stop offset="0%" stop-color="#2a9a4c"/><stop offset="55%" stop-color="#0a4820"/><stop offset="100%" stop-color="#020c04"/>
+            </radialGradient>
+            <radialGradient id="s3b2" cx="50%" cy="42%" r="42%">
+              <stop offset="0%" stop-color="#fef08a" stop-opacity="0.45"/><stop offset="55%" stop-color="#f59e0b" stop-opacity="0.12"/><stop offset="100%" stop-color="#0a4020" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="262" height="460" fill="url(#s3bg)"/>
+          <rect width="262" height="460" fill="url(#s3b2)"/>
+          <g opacity="0.22">
+            <line x1="131" y1="230" x2="131" y2="10" stroke="#fef08a" stroke-width="20" stroke-linecap="round"/>
+            <line x1="131" y1="230" x2="262" y2="130" stroke="#fef08a" stroke-width="12" stroke-linecap="round"/>
+            <line x1="131" y1="230" x2="0" y2="130" stroke="#fef08a" stroke-width="12" stroke-linecap="round"/>
+            <line x1="131" y1="230" x2="262" y2="330" stroke="#fef08a" stroke-width="10" stroke-linecap="round"/>
+            <line x1="131" y1="230" x2="0" y2="330" stroke="#fef08a" stroke-width="10" stroke-linecap="round"/>
+          </g>
+          <g opacity="0.8">
+            <g transform="translate(35,62)">
+              <line x1="0" y1="0" x2="0" y2="-18" stroke="#fef08a" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="15" y2="-10" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="18" y2="4" stroke="#fef08a" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-15" y2="12" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-18" y2="-6" stroke="#fef08a" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="0" cy="-20" r="2.5" fill="#fef08a"/>
+            </g>
+            <g transform="translate(228,50)">
+              <line x1="0" y1="0" x2="0" y2="-18" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="15" y2="-9" stroke="#fef08a" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="17" y2="5" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-14" y2="12" stroke="#fef08a" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="0" y1="0" x2="-17" y2="-5" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="0" cy="-20" r="2.5" fill="#fbbf24"/>
+            </g>
+          </g>
+          <g fill="#fef08a">
+            <polygon points="16,115 18,122 25,122 20,126 22,133 16,129 10,133 12,126 7,122 14,122" opacity="0.8"/>
+            <polygon points="248,105 250,111 256,111 251,115 253,121 248,117 243,121 245,115 240,111 246,111" opacity="0.7"/>
+          </g>
+        </svg>
+        <div class="s3-inner">
+          <div class="s3-top">🎉</div>
+          <div class="s3-title">HAI VINTO!</div>
+          <div class="s3-sub">MYSTERY BOX VERY · SETTIMANA 3</div>
+          <div class="s3-div"></div>
+          <!-- open box with prize -->
+          <div class="s3-box-wrap">
+            <div class="s3-open-box">
+              <div class="sob-glow"></div>
+              <div class="sob-body"></div>
+              <div class="sob-lid"></div>
+              <div class="sob-prize">📱</div>
+            </div>
+          </div>
+          <div class="s3-streak">
+            <span>🔥 Box Premium sbloccata · Sett. 3</span>
+          </div>
+          <div class="s3-prize-info">
+            <div class="lab">Il tuo premio questa settimana</div>
+            <div class="val">📱 Smartphone top di gamma</div>
+            <div class="desc">Premio garantito · Consegna in 3-5 giorni lavorativi</div>
+          </div>
+          <div class="s3-sub2">La tua Mystery Box Premium ha rivelato il jackpot!</div>
+          <div class="s3-cta">🎁 RITIRA IL PREMIO</div>
+          <div class="s3-note">Prossima box disponibile tra 7 giorni · Solo abbonati VeryPlus</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Mystery Box Very · VeryPlus · Box base → migliore → premium (streak settimanale)<br>
+  <a href="#">Regolamento completo su verymobile.it</a>
+</div>
+
+<script>
+// BG stars
+(function(){
+  const c=document.getElementById('bgStars');
+  for(let i=0;i<40;i++){
+    const s=document.createElement('div');s.className='bg-star';
+    const sz=Math.random()*2+1;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s;`;
+    c.appendChild(s);
+  }
+})();
+
+// Burst rays for screen 2
+(function(){
+  const b=document.getElementById('burstRays');
+  if(!b)return;
+  const angles=[0,45,90,135,180,225,270,315];
+  const cols=['#fef08a','#fbbf24','#f59e0b'];
+  angles.forEach((a,i)=>{
+    const ray=document.createElement('div');
+    ray.className='burst-ray';
+    ray.style.cssText=`transform-origin:bottom center;transform:translateX(-50%) rotate(${a}deg);background:${cols[i%3]};animation-delay:${i*.15}s;`;
+    b.appendChild(ray);
+  });
+})();
+
+// Confetti screen 3
+(function(){
+  const canvas=document.getElementById('confettiCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=262,H=460;
+  const cols=['#fef08a','#fbbf24','#f59e0b','#fff','#4ade80','#86efac','#fde68a','#a3e635','#fb923c'];
+  const pieces=Array.from({length:65},()=>({
+    x:Math.random()*W,y:Math.random()*H*.45-30,
+    r:Math.random()*3.5+1.5,d:Math.random()*60+20,
+    color:cols[Math.floor(Math.random()*cols.length)],
+    tiltAngle:Math.random()*Math.PI,tiltSpeed:Math.random()*.07+.02,
+    speed:Math.random()*1.3+.4,shape:Math.random()>.5?'rect':'circle'
+  }));
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pieces.forEach(p=>{
+      ctx.save();ctx.globalAlpha=.85;ctx.fillStyle=p.color;
+      ctx.translate(p.x,p.y);ctx.rotate(p.tiltAngle);
+      if(p.shape==='rect'){ctx.fillRect(-p.r,-p.r*.4,p.r*2,p.r*.8);}
+      else{ctx.beginPath();ctx.arc(0,0,p.r*.65,0,Math.PI*2);ctx.fill();}
+      ctx.restore();
+      p.y+=p.speed;p.tiltAngle+=p.tiltSpeed;p.x+=Math.sin(frame*.018+p.d)*.5;
+      if(p.y>H+10){p.y=-10;p.x=Math.random()*W;}
+    });
+    frame++;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
